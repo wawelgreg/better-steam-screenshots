@@ -1,8 +1,7 @@
-**Better Steam Screenshots**
+# Better Steam Screenshots
 
-**Goal**
-
+## Goal
 The goal of this project is to better the uncompressed screenshot experience from steam by adding better naming schemes automatically to new screenshots taken, automatically sorting said images to folders based on game title -> session day of game played.
 
-API's:
+# API
 - [python-steam-api 2.0.2](https://pypi.org/project/python-steam-api/)
