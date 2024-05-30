@@ -10,6 +10,7 @@ steam_key = ""
 # -> Choose the folder you want for your path
 
 # NOTE: Make sure the path in your steam settings and the path you fill below are identical. 
+# NOTE: Keep the 'r' outside of the quotation marks, the string needs to be a raw string.
 
 screenshot_path = r""
 
