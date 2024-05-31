@@ -12,6 +12,7 @@ log.info("Attaining steam api with config key...")
 steam = sas.steam_key()
 log.info("Success!")
 
+
 def import_local_dict():
     if (not Path(r"better-screenshots/game_list_data.json").is_file()):
         log.info("Game list data DNE. Returning empty dict.")
@@ -23,7 +24,11 @@ def import_local_dict():
     log.info("Returning dict.")
     return lgd
 
+
+def search_game_name(game_id):
+    return steam.apps.get_app_details(game_id)[str(game_id)]["data"]["name"]
+
+
 if __name__ == "__main__":
     log.info("Attaining local game list data.")
     local_game_dict = import_local_dict()
-    print(local_game_dict)
