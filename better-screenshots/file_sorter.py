@@ -14,18 +14,18 @@ log.info("Attaining steam api with config key...")
 steam = sas.steam_key()
 log.info("Success!")
 log.info("Attaining root and destination screenshot folder...")
-ROOT = Path(conf.screenshot_path)
+SOURCE = Path(conf.screenshot_path)
 DEST = Path(conf.destination_path)
 log.info("Success!")
 
 
 def import_local_dict():
-    if (not Path(r"better-screenshots/game_list_data.json").exists()):
+    if (not Path(fr"better-screenshots/game_list_data.json").exists()):
         log.info("Game list data DNE. Returning empty dict.")
         return dict()
     
     log.info("game_list_data.json exists -> converting to dict.")
-    with open(r"better-screenshots/game_list_data.json") as json_file:
+    with open(fr"better-screenshots/game_list_data.json") as json_file:
         lgd = json.load(json_file)
     log.info("Returning dict.")
     return lgd
@@ -35,15 +35,20 @@ def update_local_dict(local_game_dict: dict, game_id: int, game_name: str):
     local_game_dict[game_id] = game_name
 
 
+def update_game_list_data(local_game_dict: dict):
+    with open("game_list_data.json", "w") as outfile:
+        json.dump(local_game_dict, outfile)
+
+
 def search_game_name(game_id: int):
     return steam.apps.get_app_details(game_id)[str(game_id)]["data"]["name"]
 
 
 def image_iter(local_game_dict: dict):
-    for file in ROOT.glob("*.png"):
+    for file in SOURCE.glob("*.png"):
         sort_store_image(file, local_game_dict)
 
-def sort_store_image(file, local_game_dict):
+def sort_store_image(file, local_game_dict: dict):
     if (not DEST.exists()):
         DEST.mkdir(parents=True, exist_ok=True)
     
@@ -68,9 +73,40 @@ def sort_store_image(file, local_game_dict):
     log.info("%s %s %s %s %s:%s:%s", 
              scrn_game_name, scrn_year, scrn_month,
              scrn_day, scrn_hour, scrn_minute, scrn_seconds)
+    
+    final_dest = conf.destination_path + fr"\{scrn_game_name}\{scrn_year}\{scrn_month+"-"+scrn_day}"
+    log.info(final_dest)
+
+    log.info("Checking directory existence...")
+    if (not Path(final_dest).exists()):
+        log.info("Directory DNE: Making directory")
+        Path(final_dest).mkdir(parents=True, exist_ok=True)
+
+    res_file = Path(final_dest + fr"\{file.name}")
+    
+    log.info("Checking file existence...")
+    if (res_file.exists()):
+        log.info("Sorted file already exists!")
+        return
+
+    log.info("Copying file...")
+    shutil.copy(file, res_file)
+    log.info("Success!")
+
+
+
 
 
 if __name__ == "__main__":
+    log.info(">>> PROGRAM START <<<")
+
     log.info("Attaining local game list data.")
     local_game_dict = import_local_dict()
     image_iter(local_game_dict)
+    log.info("All images copied and sorted!")
+
+    log.info("Updating game_list_data.json...")
+    update_game_list_data(local_game_dict)
+    log.info("Success!")
+
+    log.info(">>> All ACTIONS COMPLETED <<<")
