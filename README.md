@@ -16,5 +16,5 @@ The goal of this project is to better the uncompressed screenshot experience fro
 After filling-out the config with your generated steam key, external screenshot directory path, and source directory path for where your sorted uncompressed screenshots shall be copied, the program will use the saved *game_list_data.json* file along with any new game titles that need to be fetched from the Steam Web API to store copies of your uncompressed external screenshots to their respective sorted directories.
 
 ## Misc:
-TODO: Implement GUI
-TODO: Make executable
+TODO: Implement GUI |
+TODO: Make executable.
