@@ -1,18 +1,19 @@
-import os
 import steam_api_setup as sas
 import config as conf
 import json
 import logging as log
 from pathlib import Path
 import shutil
-import string
 
-FORMAT = '%(asctime)s %(message)s'
+# Logger configuration
+FORMAT = '%(asctime)s|%(levelname)s|%(message)s'
 log.basicConfig(filename='bss.log', format=FORMAT, level=log.INFO)
 
+# Steam API key and paths setup from config
 log.info("Attaining steam api with config key...")
 steam = sas.steam_key()
 log.info("Success!")
+
 log.info("Attaining root and destination screenshot folder...")
 SOURCE = Path(conf.screenshot_path)
 DEST = Path(conf.destination_path)
@@ -44,9 +45,16 @@ def search_game_name(game_id: int):
     return steam.apps.get_app_details(game_id)[str(game_id)]["data"]["name"]
 
 
+def handle_title(game_name: str):
+    temp = game_name.replace(" ", "-")
+    res = "".join(x for x in temp if x.isalnum())
+    return res
+
+
 def image_iter(local_game_dict: dict):
     for file in SOURCE.glob("*.png"):
         sort_store_image(file, local_game_dict)
+
 
 def sort_store_image(file, local_game_dict: dict):
     if (not DEST.exists()):
@@ -57,12 +65,13 @@ def sort_store_image(file, local_game_dict: dict):
 
     log.info("Checking game name existence in dict: {}".format(local_game_dict))
     if parsed[0] in local_game_dict:
-        scrn_game_name = local_game_dict[parsed[0]]
+        game_name = local_game_dict[parsed[0]]
     else:
-        scrn_game_name = search_game_name(parsed[0])
-        update_local_dict(local_game_dict, parsed[0], scrn_game_name)
+        game_name = search_game_name(parsed[0])
+        update_local_dict(local_game_dict, parsed[0], game_name)
         log.info("New game name: local dict: {}".format(local_game_dict))
 
+    scrn_game_name = handle_title(game_name)
     scrn_year = parsed[1][0:4]
     scrn_month = parsed[1][4:6]
     scrn_day = parsed[1][6:8]
@@ -94,10 +103,7 @@ def sort_store_image(file, local_game_dict: dict):
     log.info("Success!")
 
 
-
-
-
-if __name__ == "__main__":
+def main():
     log.info(">>> PROGRAM START <<<")
 
     log.info("Attaining local game list data.")
@@ -110,3 +116,8 @@ if __name__ == "__main__":
     log.info("Success!")
 
     log.info(">>> All ACTIONS COMPLETED <<<")
+
+
+
+if __name__ == "__main__":
+    main()
