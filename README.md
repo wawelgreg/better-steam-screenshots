@@ -1,5 +1,6 @@
 # Better Steam Screenshots
-![SteamScreenshotLogo](https://github.com/wawelgreg/better-steam-screenshots/assets/141285799/75f6ae8e-4ae0-454e-8ba0-1a5e2ec37149)
+![SteamScreenshotLogo_2](https://github.com/wawelgreg/better-steam-screenshots/assets/141285799/b58919fe-21b1-47db-a6b9-ed9f90469d0b)
+
 Before:
 ![image](https://github.com/wawelgreg/better-steam-screenshots/assets/141285799/659a061f-bce6-4819-b328-4107482ddbd6)
 After:
