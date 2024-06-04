@@ -19,26 +19,42 @@ SOURCE = Path(conf.screenshot_path)
 DEST = Path(conf.destination_path)
 log.info("Success!")
 
+DEFAULT_DATA = {"Key": "", "Src": "", "Dest": ""}
+DEFAULT_GAME_JSON_PATH = fr"better-screenshots/game_list_data.json"
+DEFUALT_DATA_JSON_PATH = fr"better-screenshots/data.json"
 
-def import_local_dict():
-    if (not Path(fr"better-screenshots/game_list_data.json").exists()):
+
+def import_data_dict_json():
+    if (not Path(DEFUALT_DATA_JSON_PATH).exists()):
+        log.info("data.json DNE. Returning blank data.")
+        return DEFAULT_DATA
+    
+    log.info("data.json exists -> converting to dict.")
+    with open(DEFUALT_DATA_JSON_PATH) as json_file:
+        data = json.load(json_file)
+    log.info("Returning data dict.")
+    return data
+
+
+def import_game_dict_json():
+    if (not Path(DEFAULT_GAME_JSON_PATH).exists()):
         log.info("Game list data DNE. Returning empty dict.")
         return dict()
     
     log.info("game_list_data.json exists -> converting to dict.")
-    with open(fr"better-screenshots/game_list_data.json") as json_file:
+    with open(DEFAULT_GAME_JSON_PATH) as json_file:
         lgd = json.load(json_file)
-    log.info("Returning dict.")
+    log.info("Returning game list dict.")
     return lgd
 
 
-def update_local_dict(local_game_dict: dict, game_id: int, game_name: str):
-    local_game_dict[game_id] = game_name
+def update_dict(d: dict, d_key: int, d_val: str):
+    d[d_key] = d_val
 
 
-def update_game_list_data(local_game_dict: dict):
-    with open("game_list_data.json", "w") as outfile:
-        json.dump(local_game_dict, outfile)
+def update_dict_json(d: dict, file_path: str):
+    with open(file_path, "w") as outfile:
+        json.dump(d, outfile)
 
 
 def search_game_name(game_id: int):
@@ -68,7 +84,7 @@ def sort_store_image(file, local_game_dict: dict):
         game_name = local_game_dict[parsed[0]]
     else:
         game_name = search_game_name(parsed[0])
-        update_local_dict(local_game_dict, parsed[0], game_name)
+        update_dict(local_game_dict, parsed[0], game_name)
         log.info("New game name: local dict: {}".format(local_game_dict))
 
     scrn_game_name = handle_title(game_name)
@@ -107,12 +123,12 @@ def main():
     log.info(">>> PROGRAM START <<<")
 
     log.info("Attaining local game list data.")
-    local_game_dict = import_local_dict()
+    local_game_dict = import_game_dict_json()
     image_iter(local_game_dict)
     log.info("All images copied and sorted!")
 
     log.info("Updating game_list_data.json...")
-    update_game_list_data(local_game_dict)
+    update_dict_json(local_game_dict, DEFAULT_GAME_JSON_PATH)
     log.info("Success!")
 
     log.info(">>> All ACTIONS COMPLETED <<<")
