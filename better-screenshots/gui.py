@@ -2,6 +2,9 @@ from tkinter import *
 import customtkinter as ct
 from customtkinter import filedialog
 from PIL import Image
+# Backend
+import file_sorter as fs
+import config as conf
 
 # class Key_Input(ct.CTk):
 #     def __init__(self, master, text_value):
@@ -83,7 +86,8 @@ class App(ct.CTk):
         self.save_button.grid(row=0, column=0, padx=(5,5), pady=(5,5), sticky="nsw")
 
         self.clear_button = ct.CTkButton(master=self.save_clear_buttons_frame, text="Clear\nSelections", 
-                                        width=BUTTON_WIDTH, fg_color="#6B1D1D")
+                                        width=BUTTON_WIDTH, fg_color="#6B1D1D",
+                                        command=self.clear_button_click)
         self.clear_button.grid(row=0, column=1, padx=(5,5), pady=(5,5), sticky="nsw")
 
 
@@ -95,10 +99,28 @@ class App(ct.CTk):
         selected_path = filedialog.askdirectory()
 
 
-    def startup_procedures(self):
-        pass
+    def save_button_click(self): # Set config values from corresponding entries
+        conf.steam_key = self.key_entry.get()
+        conf.screenshot_path = self.src_entry.get()
+        conf.destination_path = self.dest_entry.get()
+
+
+    def clear_button_click(self): # Clear all entries
+        self.key_entry.delete(0, 'end')
+        self.src_entry.delete(0, 'end')
+        self.dest_entry.delete(0, 'end')
+
+
+    def startup_procedures(self): # Load config file to front-end
+        pass 
 
 
 
-app = App()
-app.mainloop()
+def main():
+    app = App()
+    app.mainloop()
+
+
+
+if __name__ == "__main__":
+    main()
