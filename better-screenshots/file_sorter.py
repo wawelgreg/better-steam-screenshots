@@ -26,7 +26,7 @@ DEFUALT_DATA_JSON_PATH = fr"better-screenshots/data.json"
 
 def import_data_dict_json():
     if (not Path(DEFUALT_DATA_JSON_PATH).exists()):
-        log.info("data.json DNE. Returning blank data.")
+        log.info("%s DNE. Returning blank data.", DEFUALT_DATA_JSON_PATH)
         return DEFAULT_DATA
     
     log.info("data.json exists -> converting to dict.")
@@ -38,7 +38,7 @@ def import_data_dict_json():
 
 def import_game_dict_json():
     if (not Path(DEFAULT_GAME_JSON_PATH).exists()):
-        log.info("Game list data DNE. Returning empty dict.")
+        log.info("%s DNE. Returning empty dict.", DEFAULT_GAME_JSON_PATH)
         return dict()
     
     log.info("game_list_data.json exists -> converting to dict.")
@@ -120,7 +120,7 @@ def sort_store_image(file, local_game_dict: dict):
 
 
 def main():
-    log.info(">>> PROGRAM START <<<")
+    log.info(">>> >>> PROGRAM START <<< <<<")
 
     log.info("Attaining local game list data.")
     local_game_dict = import_game_dict_json()
@@ -131,7 +131,7 @@ def main():
     update_dict_json(local_game_dict, DEFAULT_GAME_JSON_PATH)
     log.info("Success!")
 
-    log.info(">>> All ACTIONS COMPLETED <<<")
+    log.info(">>> >>> All ACTIONS COMPLETED <<< <<<")
 
 
 
