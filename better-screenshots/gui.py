@@ -132,8 +132,13 @@ class App(ct.CTk):
         self.dest_entry.delete(0, 'end')
 
 
-    def startup_procedures(self): # Load config file to front-end
-        pass
+    def startup_procedures(self): # Load data file to front-end
+        log.info("Loading saved data to frontend...")
+        temp_dict = fs.import_data_dict_json()
+        self.set_text(self.key_entry, temp_dict["Key"])
+        self.set_text(self.src_entry, temp_dict["Src"])
+        self.set_text(self.dest_entry, temp_dict["Dest"])
+        log.info("Success!")
 
 
 
