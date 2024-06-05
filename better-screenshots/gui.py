@@ -5,6 +5,7 @@ from PIL import Image
 # Backend
 import file_sorter as fs
 import config as conf
+from file_sorter import log
 
 # class Key_Input(ct.CTk):
 #     def __init__(self, master, text_value):
@@ -82,7 +83,8 @@ class App(ct.CTk):
         self.save_clear_buttons_frame.grid(row=0, column=1, padx=(5,5), pady=(5,5))
 
         self.save_button = ct.CTkButton(master=self.save_clear_buttons_frame, text="Save\nSelections", 
-                                        width=BUTTON_WIDTH, fg_color="#246B1D")
+                                        width=BUTTON_WIDTH, fg_color="#246B1D",
+                                        command=self.save_button_click)
         self.save_button.grid(row=0, column=0, padx=(5,5), pady=(5,5), sticky="nsw")
 
         self.clear_button = ct.CTkButton(master=self.save_clear_buttons_frame, text="Clear\nSelections", 
@@ -91,18 +93,37 @@ class App(ct.CTk):
         self.clear_button.grid(row=0, column=1, padx=(5,5), pady=(5,5), sticky="nsw")
 
 
+
+    def set_text(self, e: Entry, text: str):
+        e.delete(0, "end")
+        e.insert(0, text)
+
+
     def src_button_click(self):
         selected_path = filedialog.askdirectory()
+        self.set_text(self.src_entry, selected_path)
 
 
     def dest_button_click(self):
         selected_path = filedialog.askdirectory()
+        self.set_text(self.dest_entry, selected_path)
 
 
     def save_button_click(self): # Set config values from corresponding entries
-        conf.steam_key = self.key_entry.get()
-        conf.screenshot_path = self.src_entry.get()
-        conf.destination_path = self.dest_entry.get()
+        log.info("Save button clicked")
+        steam_key = self.key_entry.get()
+        src_path = self.src_entry.get()
+        dest_path = self.dest_entry.get()
+
+        log.info("Generating temp save dict")
+        temp_dict = dict(fs.DEFAULT_DATA)
+        temp_dict["Key"] = steam_key
+        temp_dict["Src"] = src_path
+        temp_dict["Dest"] = dest_path
+
+        log.info("Updating save json")
+        fs.update_dict_json(temp_dict, fs.DEFUALT_DATA_JSON_PATH)
+        log.info("Success!")
 
 
     def clear_button_click(self): # Clear all entries
@@ -112,12 +133,14 @@ class App(ct.CTk):
 
 
     def startup_procedures(self): # Load config file to front-end
-        pass 
+        pass
 
 
 
 def main():
+    log.info(">>> Starting front end app... <<<")
     app = App()
+    app.startup_procedures()
     app.mainloop()
 
 
