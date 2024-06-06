@@ -86,6 +86,15 @@ class App(ct.CTk):
                                         command=self.clear_button_click)
         self.clear_button.grid(row=0, column=1, padx=(5,5), pady=(5,5), sticky="nsw")
 
+        # Run / Status Frame
+        self.run_button_status_frame = ct.CTkFrame(master=self.buttons_frame, corner_radius=5)
+        self.run_button_status_frame.grid(row=1, column=0, padx=(5,5), pady=(5,5))
+
+        self.run_button = ct.CTkButton(master=self.run_button_status_frame, text="Sort my\nimages!", 
+                                        width=BUTTON_WIDTH, fg_color="#246B1D",
+                                        command=self.run_button_click)
+        self.run_button.grid(row=0, column=0, padx=(5,5), pady=(5,5), sticky="nsw")
+
 
 
     def set_text(self, e: Entry, text: str):
@@ -117,7 +126,11 @@ class App(ct.CTk):
     def clear_button_click(self): # Clear all entries
         self.key_entry.delete(0, 'end')
         self.src_entry.delete(0, 'end')
-        self.dest_entry.delete(0, 'end')  
+        self.dest_entry.delete(0, 'end')
+
+
+    def run_button_click(self): # Run sort and storing algorithm
+        ctrl.run_sort()
 
 
     def startup_procedures(self): # Load data file to front-end
