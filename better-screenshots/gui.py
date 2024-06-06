@@ -2,17 +2,11 @@ from tkinter import *
 import customtkinter as ct
 from customtkinter import filedialog
 from PIL import Image
-# Backend
-import file_sorter as fs
-import config as conf
-from file_sorter import log
 
-# class Key_Input(ct.CTk):
-#     def __init__(self, master, text_value):
-#         super().__init__(master)
-#         self.grid_columnconfigure(0, weight=1)
+import controller as ctrl
+import log_manager as l
 
-#         entry1 = ct.CTkEntry(text=text_value)
+
 
 class App(ct.CTk):
     def __init__(self):
@@ -110,40 +104,34 @@ class App(ct.CTk):
 
 
     def save_button_click(self): # Set config values from corresponding entries
-        log.info("Save button clicked")
+        l.log.info("Save button clicked")
         steam_key = self.key_entry.get()
         src_path = self.src_entry.get()
         dest_path = self.dest_entry.get()
 
-        log.info("Generating temp save dict")
-        temp_dict = dict(fs.DEFAULT_DATA)
-        temp_dict["Key"] = steam_key
-        temp_dict["Src"] = src_path
-        temp_dict["Dest"] = dest_path
-
-        log.info("Updating save json")
-        fs.update_dict_json(temp_dict, fs.DEFUALT_DATA_JSON_PATH)
-        log.info("Success!")
+        l.log.info("Saving settings...")
+        ctrl.save_settings(steam_key, src_path, dest_path)
+        l.log.info("Saving settings done")
 
 
     def clear_button_click(self): # Clear all entries
         self.key_entry.delete(0, 'end')
         self.src_entry.delete(0, 'end')
-        self.dest_entry.delete(0, 'end')
+        self.dest_entry.delete(0, 'end')  
 
 
     def startup_procedures(self): # Load data file to front-end
-        log.info("Loading saved data to frontend...")
-        temp_dict = fs.import_data_dict_json()
+        l.log.info("Loading saved settings...")
+        temp_dict = ctrl.get_settings()
         self.set_text(self.key_entry, temp_dict["Key"])
         self.set_text(self.src_entry, temp_dict["Src"])
         self.set_text(self.dest_entry, temp_dict["Dest"])
-        log.info("Success!")
+        l.log.info("Loading settings done")
 
 
 
 def main():
-    log.info(">>> Starting front end app... <<<")
+    l.log.info(">>> Starting front end app... <<<")
     app = App()
     app.startup_procedures()
     app.mainloop()
