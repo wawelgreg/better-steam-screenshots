@@ -1,8 +1,7 @@
 # Better Steam Screenshots
 ![SteamScreenshotLogo_2](https://github.com/wawelgreg/better-steam-screenshots/assets/141285799/b58919fe-21b1-47db-a6b9-ed9f90469d0b)
 
-![image](https://github.com/wawelgreg/better-steam-screenshots/assets/141285799/04f4e799-b0b5-4fa4-85fa-5c3d233b606d)
-
+<img src="https://github.com/wawelgreg/better-steam-screenshots/assets/141285799/2862a29c-151d-4c68-abc0-06d5759e5609" width="500">
 
 Before:
 ![image](https://github.com/wawelgreg/better-steam-screenshots/assets/141285799/659a061f-bce6-4819-b328-4107482ddbd6)
@@ -25,5 +24,5 @@ After filling-out the config with your generated steam key, external screenshot 
 
 ## TODO
 - [x] Base functionality
-- [ ] Implement GUI
+- [ ] Implement Functional GUI
 - [ ] Make executable
