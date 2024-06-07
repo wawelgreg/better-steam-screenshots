@@ -43,6 +43,9 @@ class App(ct.CTk):
         self.dest_label = ct.CTkLabel(master=self.frame1, text="Destination Path:")
         self.dest_label.grid(row=2, column=0, padx=10, pady=(5,5), sticky="nsw")
 
+        t = ct.CTkTextbox(self)
+        
+
         self.key_entry = ct.CTkEntry(corner_radius=5, width=400, master=self.frame1, placeholder_text="Enter Steam API Key")
         self.key_entry.grid(row=0, column=1, padx=10, pady=(5,5), sticky="nsw")
 
@@ -73,18 +76,18 @@ class App(ct.CTk):
         self.dest_button.grid(row=0, column=1, padx=(5,5), pady=(5,5), sticky="nsw")
 
         # Save / Clear Frame
-        self.save_clear_buttons_frame = ct.CTkFrame(master=self.buttons_frame, corner_radius=5)
-        self.save_clear_buttons_frame.grid(row=0, column=1, padx=(5,5), pady=(5,5))
+        # self.save_clear_buttons_frame = ct.CTkFrame(master=self.buttons_frame, corner_radius=5)
+        # self.save_clear_buttons_frame.grid(row=0, column=1, padx=(5,5), pady=(5,5))
 
-        self.save_button = ct.CTkButton(master=self.save_clear_buttons_frame, text="Save\nSelections", 
+        self.save_button = ct.CTkButton(master=self.selection_buttons_frame, text="Save\nSelections", 
                                         width=BUTTON_WIDTH, fg_color="#246B1D",
                                         command=self.save_button_click)
-        self.save_button.grid(row=0, column=0, padx=(5,5), pady=(5,5), sticky="nsw")
+        self.save_button.grid(row=0, column=2, padx=(5,5), pady=(5,5), sticky="nsw")
 
-        self.clear_button = ct.CTkButton(master=self.save_clear_buttons_frame, text="Clear\nSelections", 
+        self.clear_button = ct.CTkButton(master=self.selection_buttons_frame, text="Clear\nSelections", 
                                         width=BUTTON_WIDTH, fg_color="#6B1D1D",
                                         command=self.clear_button_click)
-        self.clear_button.grid(row=0, column=1, padx=(5,5), pady=(5,5), sticky="nsw")
+        self.clear_button.grid(row=0, column=3, padx=(5,5), pady=(5,5), sticky="nsw")
 
         # Run / Status Frame
         self.run_button_status_frame = ct.CTkFrame(master=self.buttons_frame, corner_radius=5)
@@ -92,9 +95,19 @@ class App(ct.CTk):
 
         self.run_button = ct.CTkButton(master=self.run_button_status_frame, text="Sort my\nimages!", 
                                         width=BUTTON_WIDTH, fg_color="#246B1D",
-                                        command=self.run_button_click)
-        self.run_button.grid(row=0, column=0, padx=(5,5), pady=(5,5), sticky="nsw")
+                                        command=self.run_button_click, border_color="#CCCCCC", border_width=1)
+        self.run_button.pack(padx=(5,5), pady=(5,5), side="left")
+        # self.run_button.grid(row=0, column=0, padx=(5,5), pady=(5,5), sticky="nsw")
 
+        DEFAULT_STATUS = "Welcome!"
+
+        self.status_label = ct.CTkLabel(master=self.run_button_status_frame, text=DEFAULT_STATUS, width=290,
+                                        anchor="w", fg_color="#25404E", corner_radius=8, height=39)
+        self.status_label.pack(padx=(5,5), pady=(5,5))
+
+
+    def update_label_text(self, label_obj: Label, new_text: str):
+        label_obj.configure(text=new_text)        
 
 
     def set_text(self, e: Entry, text: str):
@@ -121,16 +134,20 @@ class App(ct.CTk):
         l.log.info("Saving settings...")
         ctrl.save_settings(steam_key, src_path, dest_path)
         l.log.info("Saving settings done")
+        self.update_label_text(self.status_label, "Entries saved!")
 
 
     def clear_button_click(self): # Clear all entries
         self.key_entry.delete(0, 'end')
         self.src_entry.delete(0, 'end')
         self.dest_entry.delete(0, 'end')
+        self.update_label_text(self.status_label, "Entries cleared, but still saved!")
 
 
     def run_button_click(self): # Run sort and storing algorithm
+        self.update_label_text(self.status_label, "Sorting images...")
         ctrl.run_sort()
+        self.update_label_text(self.status_label, "All images sorted! :)")
 
 
     def startup_procedures(self): # Load data file to front-end
