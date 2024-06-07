@@ -9,7 +9,7 @@ DEFAULT_GAME_JSON_PATH = fr"better-screenshots/game_list_data.json"
 DEFAULT_DATA_JSON_PATH = fr"better-screenshots/data.json"
 
 
-# GLOBAL Steam api key, steam object, and source and dest Path objects
+# GLOBAL Steam api key, steam object, and source and dest paths
 steam_key = "BLANK_KEY"
 source_path = "BLANK_SRC"
 dest_path = "BLANK_DEST"
@@ -103,7 +103,7 @@ def sort_store_image(file, local_game_dict: dict):
              scrn_game_name, scrn_year, scrn_month,
              scrn_day, scrn_hour, scrn_minute, scrn_seconds)
     
-    final_dest = dest_path + fr"\{scrn_game_name}\{scrn_year}\{scrn_month+"-"+scrn_day}"
+    final_dest = dest_path + fr"/{scrn_game_name}/{scrn_year}/{scrn_month+"-"+scrn_day}"
     l.log.info(final_dest)
 
     l.log.info("Checking directory existence...")
@@ -111,7 +111,7 @@ def sort_store_image(file, local_game_dict: dict):
         l.log.info("Directory DNE: Making directory")
         Path(final_dest).mkdir(parents=True, exist_ok=True)
 
-    res_file = Path(final_dest + fr"\{file.name}")
+    res_file = Path(final_dest + fr"/{file.name}")
     
     l.log.info("Checking file existence...")
     if (res_file.exists()):
