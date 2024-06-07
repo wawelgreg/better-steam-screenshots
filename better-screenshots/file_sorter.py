@@ -103,7 +103,7 @@ def sort_store_image(file, local_game_dict: dict):
              scrn_game_name, scrn_year, scrn_month,
              scrn_day, scrn_hour, scrn_minute, scrn_seconds)
     
-    final_dest = dest_path + fr"/{scrn_game_name}/{scrn_year}/{scrn_month+"-"+scrn_day}"
+    final_dest = dest_path + fr"/Sorted-Screenshots/{scrn_game_name}/{scrn_year}/{scrn_month+"-"+scrn_day}"
     l.log.info(final_dest)
 
     l.log.info("Checking directory existence...")
