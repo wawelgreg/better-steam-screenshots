@@ -86,7 +86,6 @@ def check_format(png_name: str) -> bool:
     return False
 
 
-
 def image_iter(local_game_dict: dict):
     for file in Path(source_path).glob("*.png"):
         l.log.info("Checking format of %s", file.stem)
