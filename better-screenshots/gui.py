@@ -26,7 +26,7 @@ class App(ct.CTk):
         self.image_frame = ct.CTkFrame(master=self.frame0)
         self.image_frame.grid(row=0, column=0, padx=(5,5), pady=(5,5))
 
-        logo = ct.CTkImage(Image.open(fr'better-screenshots/assets/steam_screenshots_logo.png'), size=(500,125))
+        logo = ct.CTkImage(Image.open(fr'assets/steam_screenshots_logo.png'), size=(500,125))
         self.image_label = ct.CTkLabel(master=self.image_frame, text="", image=logo)
         self.image_label.grid(row=0, column=0, pady=(5,5))
 
