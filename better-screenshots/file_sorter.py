@@ -5,8 +5,8 @@ import shutil
 import log_manager as l
 
 DEFAULT_DATA = {"Key": "", "Src": "", "Dest": ""}
-DEFAULT_GAME_JSON_PATH = fr"better-screenshots/game_list_data.json"
-DEFAULT_DATA_JSON_PATH = fr"better-screenshots/data.json"
+DEFAULT_GAME_JSON_PATH = fr"game_list_data.json"
+DEFAULT_DATA_JSON_PATH = fr"data.json"
 
 
 # GLOBAL Steam api key, steam object, and source and dest paths
@@ -71,9 +71,27 @@ def handle_title(game_name: str):
     return res
 
 
+def check_format(png_name: str) -> bool:
+    if len(png_name) < 22 or len(png_name) > 23:
+        return False
+    
+    if len(png_name) == 22:
+        if (png_name[5] == '_') and (png_name[20] == '_'):
+            return True
+        
+    if len(png_name) == 23:
+        if(png_name[6] == '_') and (png_name[21] == '_'):
+            return True
+    
+    return False
+
+
+
 def image_iter(local_game_dict: dict):
     for file in Path(source_path).glob("*.png"):
-        sort_store_image(file, local_game_dict)
+        l.log.info("Checking format of %s", file.stem)
+        if check_format(file.stem):
+            sort_store_image(file, local_game_dict)
 
 
 def sort_store_image(file, local_game_dict: dict):
