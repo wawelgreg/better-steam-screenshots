@@ -124,12 +124,18 @@ class App(ct.CTk):
         selected_path = filedialog.askdirectory()
         self.set_text(self.dest_entry, selected_path)
 
-
-    def save_button_click(self): # Set config values from corresponding entries
-        l.log.info("Save button clicked")
+    
+    def entry_values(self):
         steam_key = self.key_entry.get()
         src_path = self.src_entry.get()
         dest_path = self.dest_entry.get()
+
+        return (steam_key, src_path, dest_path)
+
+
+    def save_button_click(self): # Set config values from corresponding entries
+        l.log.info("Save button clicked")
+        steam_key, src_path, dest_path = self.entry_values()
 
         l.log.info("Saving settings...")
         ctrl.save_settings(steam_key, src_path, dest_path)
@@ -146,11 +152,11 @@ class App(ct.CTk):
 
     def run_button_click(self): # Run sort and storing algorithm
         self.update_label_text(self.status_label, "Sorting images...")
-        ctrl.run_sort()
+        ctrl.run_sort(self.entry_values())
         self.update_label_text(self.status_label, "All images sorted! :)")
 
 
-    def startup_procedures(self): # Load data file to front-end
+    def startup_procedures_gui(self): # Load data file to front-end
         l.log.info("Loading saved settings...")
         temp_dict = ctrl.get_settings()
         self.set_text(self.key_entry, temp_dict["Key"])
@@ -163,7 +169,7 @@ class App(ct.CTk):
 def main():
     l.log.info(">>> Starting front end app... <<<")
     app = App()
-    app.startup_procedures()
+    app.startup_procedures_gui()
     app.mainloop()
 
 
