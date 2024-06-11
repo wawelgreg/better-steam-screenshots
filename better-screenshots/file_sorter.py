@@ -69,6 +69,7 @@ def handle_title(game_name: str) -> str:
     return res
 
 
+# Example steam screenshot filename formats: (427520_20240602140758_1, 34900_20240602143223_1)
 def check_format(png_name: str) -> bool:
     if len(png_name) < 22 or len(png_name) > 23:
         return False
