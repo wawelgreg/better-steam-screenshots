@@ -22,10 +22,9 @@ def update_glob_vars(entry_values: tuple):
     global dest_path
 
     steam_key, source_path, dest_path = entry_values
-    print("Hello: {} {} {}".format(steam_key, source_path, dest_path))
 
 
-def import_data_dict_json():
+def import_data_dict_json() -> dict:
     if (not Path(DEFAULT_DATA_JSON_PATH).exists()):
         l.log.info("%s DNE. Returning blank data", DEFAULT_DATA_JSON_PATH)
         return DEFAULT_DATA
@@ -44,7 +43,7 @@ def update_dict_json(d: dict, file_path: str):
         json.dump(d, outfile)
 
 
-def import_game_dict_json():
+def import_game_dict_json() -> dict:
     if (not Path(DEFAULT_GAME_JSON_PATH).exists()):
         l.log.info("%s DNE. Returning empty dict.", DEFAULT_GAME_JSON_PATH)
         return dict()
@@ -60,11 +59,11 @@ def update_dict(d: dict, d_key: int, d_val: str):
     d[d_key] = d_val
 
 
-def search_game_name(game_id: int):
+def search_game_name(game_id: int) -> str:
     return steam.apps.get_app_details(game_id)[str(game_id)]["data"]["name"]
 
 
-def handle_title(game_name: str):
+def handle_title(game_name: str) -> str:
     temp = game_name.replace(" ", "-")
     res = "".join(x for x in temp if x.isalnum())
     return res
