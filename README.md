@@ -40,6 +40,3 @@ The goal of this project is to better the uncompressed screenshot experience fro
 5. Click `Sort my images!` and sorted copies of your images will be stored at the destination path you set
 
 Enjoy! :)
-
-## Documentation
-TODO
