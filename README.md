@@ -38,4 +38,8 @@ The goal of this project is to better the uncompressed screenshot experience fro
    * Destination path of your sorted images
 * Optional: If you want your settings to be saved for future sorting of more images, click `Save Selections`
 5. Click `Sort my images!` and sorted copies of your images will be stored at the destination path you set
+
 Enjoy! :)
+
+## Documentation
+TODO
