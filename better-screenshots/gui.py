@@ -4,8 +4,9 @@ from customtkinter import filedialog
 from PIL import Image
 
 import controller as ctrl
-import log_manager as l
+import logging
 
+log = logging.getLogger(__name__)
 
 
 class App(ct.CTk):
@@ -130,12 +131,12 @@ class App(ct.CTk):
 
 
     def save_button_click(self): # Set config values from corresponding entries
-        l.log.info("Save button clicked")
+        log.info("Save button clicked")
         steam_key, src_path, dest_path = self.entry_values()
 
-        l.log.info("Saving settings...")
+        log.info("Saving settings...")
         ctrl.save_settings(steam_key, src_path, dest_path)
-        l.log.info("Saving settings done")
+        log.info("Saving settings done")
         self.update_label_text(self.status_label, "Entries saved!")
 
 
@@ -153,17 +154,20 @@ class App(ct.CTk):
 
 
     def startup_procedures_gui(self): # Load data file to front-end
-        l.log.info("Loading saved settings...")
+        log.info("Loading saved settings...")
         temp_dict = ctrl.get_settings()
         self.set_text(self.key_entry, temp_dict["Key"])
         self.set_text(self.src_entry, temp_dict["Src"])
         self.set_text(self.dest_entry, temp_dict["Dest"])
-        l.log.info("Loading settings done")
+        log.info("Loading settings done")
 
 
 
 def main():
-    l.log.info(">>> Starting front end app... <<<")
+    FORMAT = '%(levelname)s|%(filename)s|%(message)s'
+    logging.basicConfig(filename='bss.log', format=FORMAT, level=logging.INFO)
+
+    log.info(">>> Starting front end app... <<<")
     app = App()
     app.startup_procedures_gui()
     app.mainloop()

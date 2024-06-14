@@ -1,5 +1,7 @@
 import file_sorter as fs
-from log_manager import log
+import logging
+
+log = logging.getLogger(__name__)
 
 
 def save_settings(key_text: str, src_text: str, dest_text: str):
