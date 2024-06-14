@@ -185,5 +185,9 @@ def sort(entry_values: tuple):
     l.log.info(">>> >>> All ACTIONS COMPLETED <<< <<<")
 
 
-if __name__ == "__main__":
+def main():
     sort()
+
+
+if __name__ == "__main__":
+    main()
