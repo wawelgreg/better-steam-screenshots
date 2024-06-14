@@ -91,3 +91,6 @@ The app takes your external screenshots (all located together in one directory w
 5. Click `Sort my images!` and sorted copies of your images will be stored at the destination path you set
 
 Enjoy! :)
+
+## Design:
+For the overall design on the structure of this program, I went with the Model View Controller (MVC) design pattern. I split the program into three parts- GUI, Controller, and File Sorter- in order to make maintenence and expansion much easier, as any modular architecture with seperate objects typicially provides. Two JSON files, `game_list_data.json` and `data.json`, are used to store the user's saved entry options (Steam API Key, Screenshot Source Path, and Sorted Screenshot Destination Path) for when they open the application again, while the `data.json` file is used to store automatically generated/updated dictionry lists of saved correlated game IDs to their game names which are found with the help of the Steam Web API. With the locally stored `data.json` file, the Steam API does not need to be called much at all if their list of screenshots usually comes from 3-4 different games max.
