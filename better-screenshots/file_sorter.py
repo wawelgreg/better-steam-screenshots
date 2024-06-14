@@ -32,8 +32,6 @@ def import_data_dict_json() -> dict:
     l.log.info("data.json exists -> converting to dict")
     with open(DEFAULT_DATA_JSON_PATH) as json_file:
         data = json.load(json_file)
-    # l.log.info("updating global variables")
-    # update_glob_vars(data)
     l.log.info("Returning data dict")
     return data
 
@@ -139,31 +137,9 @@ def sort_store_image(file, local_game_dict: dict):
     l.log.info("Success!")
 
 
-# def startup_procedures():
-#     update_glob_vars(import_data_dict_json())
-
 def startup_procedures(entry_values: tuple):
     update_glob_vars(entry_values)
 
-
-# def sort():
-#     l.log.info(">>> >>> PROGRAM START <<< <<<")
-    
-#     l.log.info("Backend checks...")
-#     startup_procedures()
-#     global steam
-#     steam = sas.steam_access(steam_key)
-
-#     l.log.info("Attaining local game list data.")
-#     local_game_dict = import_game_dict_json()
-#     image_iter(local_game_dict)
-#     l.log.info("All images copied and sorted!")
-
-#     l.log.info("Updating game_list_data.json...")
-#     update_dict_json(local_game_dict, DEFAULT_GAME_JSON_PATH)
-#     l.log.info("Success!")
-
-#     l.log.info(">>> >>> All ACTIONS COMPLETED <<< <<<")
 
 def sort(entry_values: tuple):
     l.log.info(">>> >>> PROGRAM START <<< <<<")

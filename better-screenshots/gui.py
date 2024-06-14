@@ -76,9 +76,6 @@ class App(ct.CTk):
         self.dest_button.grid(row=0, column=1, padx=(5,5), pady=(5,5), sticky="nsw")
 
         # Save / Clear Frame
-        # self.save_clear_buttons_frame = ct.CTkFrame(master=self.buttons_frame, corner_radius=5)
-        # self.save_clear_buttons_frame.grid(row=0, column=1, padx=(5,5), pady=(5,5))
-
         self.save_button = ct.CTkButton(master=self.selection_buttons_frame, text="Save\nSelections", 
                                         width=BUTTON_WIDTH, fg_color="#246B1D",
                                         command=self.save_button_click)
@@ -97,7 +94,6 @@ class App(ct.CTk):
                                         width=BUTTON_WIDTH, fg_color="#246B1D",
                                         command=self.run_button_click, border_color="#CCCCCC", border_width=1)
         self.run_button.pack(padx=(5,5), pady=(5,5), side="left")
-        # self.run_button.grid(row=0, column=0, padx=(5,5), pady=(5,5), sticky="nsw")
 
         DEFAULT_STATUS = "Welcome!"
 

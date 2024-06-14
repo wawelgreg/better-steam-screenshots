@@ -12,10 +12,6 @@ def get_settings() -> dict:
     return fs.import_data_dict_json()
 
 
-# Run sorting algorithm in file_sorter
-# def run_sort():
-#     fs.sort()
-
 # Run sorting algorithm in file_sorter with data from entry widgets
 def run_sort(entry_values: tuple):
     fs.sort(entry_values)
