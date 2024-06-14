@@ -58,19 +58,22 @@ External-screenshots/
                 └── 427520_20240602140758_1.png
 ```
 
-## Goal + Background:
-The goal of this project is to better the uncompressed screenshot experience from steam by automatically sorting said images to folders based on game title -> year -> session day of game played and general automatic file manipulation pracitces. This aims to better enhance the screenshot experience for Steam screenshot artists out there by taking their long existing list of saved external screenshots and sorting them in a more user-friendly searching manner. I have made plenty of artistic pictures myself that I have taken over the years with different online communities over the years- be it for personal use, sharing with friends, saving fond memories, or even for usage in community content, media, banners, etc.
+## How it Works:
+The app takes your external screenshots (all located together in one directory where steam sends them), parses the file names for information regarding steam game ID and date information, references either the locally-saved json or Steam Web API for getting the string name of the game, reformats the name of the game into a legal directory name, and then creates year -> month-day directories for where those copied screenshots are finally pasted.
 
 ## API + Libraries:
 ### API
 - [python-steam-api 2.0.2](https://pypi.org/project/python-steam-api/)
+  - Used to correlate the game IDs parsed from the screenshot filenames to the title of the game used in the naming of the sorted directories.
 
 ### GUI
 - [Tkinter](https://docs.python.org/3/library/tkinter.html)
 - [CustomTkinter](https://customtkinter.tomschimansky.com/)
+   - Library that powers the GUI of the app with a more modern look and feel.
 
 ### Paths Libirary
 - [Pathlib](https://docs.python.org/3/library/pathlib.html)
+   - Library that offers the ability for this application to work on multiple OS and their respective Windows or Posix Paths.
 
 ## Usage:
 1. Download the repo (or clone it locally)
