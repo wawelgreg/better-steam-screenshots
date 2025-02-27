@@ -71,7 +71,8 @@ def handle_title(game_name: str) -> str:
 
 
 def check_format(png_name: str) -> bool:
-    '''Make sure filename format matches steam screenshot formatting
+    '''
+    Make sure filename format matches steam screenshot formatting
     
     Example steam screenshot filename formats:
     (1874880_20240602140758_1,
